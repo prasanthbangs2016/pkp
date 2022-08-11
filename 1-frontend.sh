@@ -20,7 +20,7 @@ statuscheck
 
 
 echo "unarchive the frontend code"
-unzip -o tmp/frontend.zip &>>${LOG}
+unzip -o /tmp/frontend.zip &>>${LOG}
 mv frontend-main/static/* .
 mv frontend-main/localhost.conf /etc/nginx/default.d/${COMPONENT}.conf
 statuscheck
