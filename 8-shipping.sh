@@ -4,19 +4,16 @@
 
 #Install Maven, This will install Java too
 
-yum install maven -y &>>/tmp/roboshop.log
+
+source common.sh
+
+COMPONENT=shipping
+
+JAVA
+
 
 #As per the standard process, we always run the applications as a normal user.
 
-useradd roboshop
-
-cd /home/roboshop
-curl -s -L -o /tmp/shipping.zip "https://github.com/roboshop-devops-project/shipping/archive/main.zip" &>>/tmp/roboshop.log
-unzip -o /tmp/shipping.zip &>>/tmp/roboshop.log
-mv shipping-main shipping
-cd shipping
-mvn clean package &>>/tmp/roboshop.log
-mv target/shipping-1.0.jar shipping.jar
 
 #Update SystemD Service file 
     
@@ -24,7 +21,4 @@ mv target/shipping-1.0.jar shipping.jar
     
 #Update `DBHOST` with MySQL Server IP
 
-mv /home/roboshop/shipping/systemd.service /etc/systemd/system/shipping.service
-systemctl daemon-reload &>>/tmp/roboshop.log
-systemctl start shipping &>>/tmp/roboshop.log
-systemctl enable shipping &>>/tmp/roboshop.log
+

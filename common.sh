@@ -32,6 +32,17 @@ APP_CLEAN() {
   statuscheck
 }
 
+SYSTEMD() {
+  echo configuring ${COMPONENT} systemD service
+  mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/shipping.service
+  systemctl daemon-reload &>>/tmp/roboshop.log
+  systemctl start shipping &>>/tmp/roboshop.log
+  systemctl enable shipping &>>/tmp/roboshop.log
+  statuscheck
+}
+
+
+
 NODEJS() {
     
     echo "downloading nodejs repos"
@@ -69,3 +80,19 @@ fi
 
 LOG=/tmp/${COMPONENT}.log
 rm -rf ${LOG}
+
+JAVA() {
+  echo install maven
+  yum install maven -y &>>${LOG}
+  statuscheck
+  APP_USER_SETUP
+  DOWNLOAD
+  APP_CLEAN
+  echo shipping clean package with maven
+  mvn clean package &>>${LOG}
+  mv target/shipping-1.0.jar shipping.jar
+  statuscheck
+  SYSTEMD
+  
+
+}
