@@ -50,7 +50,7 @@ DOWNLOAD
 
 echo "Extract & Load Schema"
 cd /tmp &>>${LOG} && unzip -o mysql.zip &>>${LOG} &&  cd mysql-main &>>${LOG} && mysql -u root -p$MYSQL_PASSWORD <shipping.sql &>>${LOG}
-StatusCheck
+statuscheck
 
 
 #Now a default root password will be generated and given in the log file.
