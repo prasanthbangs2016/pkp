@@ -6,7 +6,7 @@ source common.sh
 COMPONENT=frontend
 
  echo "Installing nginx"
- yum install nginx -y
+ yum install nginx -y &>>${Log}
  statuscheck
  
 
@@ -20,11 +20,11 @@ statuscheck
 
 
 echo "unarchive the frontend code"
-unzip -o /tmp/frontend.zip &>>/tmp/${Log}
+unzip -o /tmp/frontend.zip &>>${Log}
 mv frontend-main/static/* .
 mv frontend-main/localhost.conf /etc/nginx/default.d/${COMPONENT}.conf
 statuscheck
 
 echo "start nginx service"
-systemctl enable nginx &>>/tmp/${Log}
-systemctl restart nginx &>>/tmp/${Log}
+systemctl enable nginx &>>${Log}
+systemctl restart nginx &>>${Log}
