@@ -38,9 +38,8 @@ statuscheck
 
 #Create application user and adding user if not exist
 rabbitmqctl list_users | grep roboshop  &>>${LOG}
-
 if [ $? -ne 0 ]; then
-  echo adding rabbitmq user
+  echo adding rabbitmq user in rabbitmq
   rabbitmqctl add_user roboshop ${RABBITMQ_PASSWORD} &>>${LOG}
   rabbitmqctl set_user_tags roboshop administrator &>>${LOG}
   rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>${LOG}
