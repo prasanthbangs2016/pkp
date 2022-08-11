@@ -7,35 +7,40 @@ statuscheck() {
     fi
 }
 
+DOWNLOAD() {
+    echo "Downloading ${COMPONENT} content"
+    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}archive/main.zip" &>>/tmp/${COMPONENT}.log
+    statuscheck
+}
 NODEJS() {
     
     echo "downloading nodejs repos"
-    curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
+    curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/${COMPONENT}.log
     statuscheck
 
 
     echo "Installing nodes"
-    yum install nodejs -y &>>/tmp/roboshop.log
+    yum install nodejs -y &>>/tmp/${COMPONENT}.log
     statuscheck
 
-    id roboshop & &>>/tmp/roboshop.log
+    id roboshop & &>>/tmp/${COMPONENT}.log
     if [ $? -eq 0 ]; then
       echo "adding application user"
       useradd roboshop
       statuscheck
     fi
 
-    echo "Downloading application content"
-    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}archive/main.zip" &>>/tmp/roboshop.log
+    echo "Downloading ${COMPONENT} content"
+    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}archive/main.zip" &>>/tmp/${COMPONENT}.log
     cd /home/roboshop
     statuscheck
 
     echo "cleaing old application content"
-    rm -rf ${COMPONENT} &>>/tmp/roboshop.log
+    rm -rf ${COMPONENT} &>>/tmp/${COMPONENT}.log
     statuscheck
 
     echo "Extract ${COMPONENT} application code"
-    unzip -o /tmp/${COMPONENT}.zip &>>/tmp/roboshop.log
+    unzip -o /tmp/${COMPONENT}.zip &>>/tmp/${COMPONENT}.log
     mv ${COMPONENT}-main ${COMPONENT}
     cd ${COMPONENT}
     statuscheck
