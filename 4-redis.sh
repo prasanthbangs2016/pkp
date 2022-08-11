@@ -12,6 +12,10 @@ yum install redis-6.2.7 -y &>>${LOG}
 statuscheck
 
 #Update the bind from 127.0.0.1 to 0.0.0.0 in config file /etc/redis.conf & /etc/redis/redis.conf
+echo updating redis listen address
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis.conf &>>${LOG}
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf &>>${LOG}
+statuscheck
 
 echo start Redis service
 systemctl enable redis &>>${LOG}
