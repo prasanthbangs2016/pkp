@@ -12,6 +12,26 @@ DOWNLOAD() {
     curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>/tmp/${COMPONENT}.log
     statuscheck
 }
+
+APP_USER_SETUP() {
+  id roboshop &>>${LOG}
+  if [ $? -ne 0 ]; then
+    echo Adding Application User
+    useradd roboshop &>>${LOG}
+    StatusCheck
+  fi
+}
+
+APP_CLEAN() {
+  echo Cleaning old application content
+  cd /home/roboshop &>>${LOG} && rm -rf ${COMPONENT} &>>${LOG}
+  StatusCheck
+  
+  echo Extract Application Archive
+  unzip -o /tmp/${COMPONENT}.zip &>>${LOG} && mv ${COMPONENT}-main ${COMPONENT} &>>${LOG} && cd ${COMPONENT} &>>${LOG}
+  StatusCheck
+}
+
 NODEJS() {
     
     echo "downloading nodejs repos"
@@ -23,39 +43,9 @@ NODEJS() {
     yum install nodejs -y &>>/tmp/${COMPONENT}.log
     statuscheck
 
-    id ${COMPONENT} & &>>/tmp/${COMPONENT}.log
-    if [ $? -eq 0 ]; then
-      echo "adding application user"
-      useradd ${COMPONENT}
-      statuscheck
-    fi
-
-    echo "Downloading ${COMPONENT} content"
-    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>/tmp/${COMPONENT}.log
-    cd /home/${COMPONENT}
-    statuscheck
-
-    echo "cleaing old application content"
-    rm -rf ${COMPONENT} &>>/tmp/${COMPONENT}.log
-    statuscheck
-
-    echo "Extract ${COMPONENT} application code"
-    unzip -o /tmp/${COMPONENT}.zip &>>/tmp/${COMPONENT}.log
-    mv ${COMPONENT}-main ${COMPONENT}
-    cd ${COMPONENT}
-    statuscheck
-
-    echo "Downloading ${COMPONENT} app code"
-    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/${COMPONENT}-devops-project/${COMPONENT}/archive/main.zip" &>>/tmp/${COMPONENT}.log
-    cd /home/${COMPONENT}
-    statuscheck
-
-    echo " Removing older application code"
-    rm -rf ${COMPONENT}
-    unzip -o /tmp/${COMPONENT}.zip &>>/tmp/${COMPONENT}.log
-    mv ${COMPONENT}-main ${COMPONENT} 
-    cd /home/${COMPONENT}/${COMPONENT}
-    statuscheck
+    APP_USER_SETUP
+    DOWNLOAD
+    APP_CLEAN
 
     echo "Downloading application dependencies"
     npm install &>>/tmp/${COMPONENT}.log
