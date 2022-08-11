@@ -1,0 +1,6 @@
+SED : stream line editor
+
+delete the lines
+substitue a word
+add the line
+
