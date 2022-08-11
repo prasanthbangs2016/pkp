@@ -52,7 +52,7 @@ NODEJS() {
     statuscheck
 
     echo "configuring the ${COMPONENT} systemd service"
-    mv /home/${COMPONENT}/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service
+    mv /home/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service
     systemctl daemon-reload &>>/tmp/${COMPONENT}.log
     systemctl start ${COMPONENT} &>>/tmp/${COMPONENT}.log
     systemctl enable ${COMPONENT} &>>/tmp/${COMPONENT}.log
