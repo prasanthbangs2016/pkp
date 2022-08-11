@@ -44,4 +44,5 @@ if [ $? -ne 0 ]; then
   rabbitmqctl add_user roboshop ${RABBITMQ_PASSWORD} &>>${LOG}
   rabbitmqctl set_user_tags roboshop administrator &>>${LOG}
   rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>${LOG}
-statuscheck
+  statuscheck
+fi
