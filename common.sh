@@ -18,18 +18,18 @@ APP_USER_SETUP() {
   if [ $? -ne 0 ]; then
     echo Adding Application User
     useradd roboshop &>>${LOG}
-    StatusCheck
+    statuscheck
   fi
 }
 
 APP_CLEAN() {
   echo Cleaning old application content
   cd /home/roboshop &>>${LOG} && rm -rf ${COMPONENT} &>>${LOG}
-  StatusCheck
+  statuscheck
   
   echo Extract Application Archive
   unzip -o /tmp/${COMPONENT}.zip &>>${LOG} && mv ${COMPONENT}-main ${COMPONENT} &>>${LOG} && cd ${COMPONENT} &>>${LOG}
-  StatusCheck
+  statuscheck
 }
 
 NODEJS() {
