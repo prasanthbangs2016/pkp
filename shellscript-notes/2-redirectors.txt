@@ -1,0 +1,14 @@
+Redirectors:
+-----------
+input(>)  ---- input to the file
+output(<)  --- output to the file
+override/append(>>) --- append
+
+STDOUT(1>)(>) : only output
+
+STDERR(2>): only error
+
+STDOUT & STDERR(&>)
+both output and error will be redirected to the samefile
+
+&>/dev/null : nullifying if any error is coming

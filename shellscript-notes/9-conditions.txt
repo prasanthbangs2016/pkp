@@ -1,0 +1,139 @@
+conditions
+==========
+1-case
+2-if
+
+a-simple
+========
+
+command
+|
+if 
+|
+true
+|
+command
+
+syntax:
+if [ expression ]
+then
+  commands
+fi
+
+
+b-if else
+========
+
+commands
+if else false--> commands
+|
+true
+|
+command
+
+syntax:
+========
+if [ expression ]
+then
+  commands
+else
+  commands
+fi
+
+
+c-else if
+===========
+commands
+|
+elseif ---true--->command
+|
+false
+|
+elseif ---true--->command
+|
+false
+|
+commands
+
+syntax:
+========
+if [ expression 1 ]
+then
+  command1
+elif [ expression 2 ]
+then
+  command2
+elif [ expression 3 ]
+then
+  command3
+else
+  command4
+fi
+
+Expressions
+===========
+you can observer all the conditions are are dependent on expressions,catageories as follows.
+
+sting comparision:
+------------------
+operators: =,==,!=,-z
+
+example
+[ "abc" == "ABC" ]
+[ "abc" != "ABC" ]
+[ -z "$USER" ] : to determine if variable is empty and doesnt have any data inside variable if it is true then it is empty variable
+
+number comparision
+====================
+operators : -eq,-ne,-gt,-ge,-lt,-le
+
+example
+[ 1 -eq 2 ]
+[ 2 -ne 3 ]
+[ 2 -gt 3 ]
+[ 2 -ge 3 ]
+[ 2 -lt 3 ]
+[ 2 -lt 3 ]
+
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
+
+if [ $? -eq 0 ]; then
+  echo -e "\e[32mSuccess\e[0m"
+else
+  echo -e "\e[31mfailure\e[0m"
+fi
+
+if there is a failure it should not continue
+
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
+if [ $? -eq 0 ]; then
+  echo -e "\e[32mSuccess\e[0m"
+else
+  echo -e "\e[31mfailure\e[0m"
+  exit 1
+fi
+
+if user is already exist it should continue
+
+id roboshop & &>>/tmp/roboshop.log
+if [ $? -eq 0 ]; then
+  echo "adding application user"
+  useradd roboshop
+  if [ $? -eq 0 ]; then
+    echo -e "\e[32mSuccess\e[0m"
+  else
+    echo -e "\e[31mfailure\e[0m"
+    exit 1
+  fi
+fi
+
+
+file comparision
+================
+operators -f
+
+example
+[ -f file ]
+[ ! -f file ]
+
+

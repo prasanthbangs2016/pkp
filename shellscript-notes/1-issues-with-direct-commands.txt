@@ -1,0 +1,62 @@
+script is running even if i am not root user.
+
+need to edit file from cli.
+
+fetch mysql password and parse it somewhere else.(variables) --solved
+  we're resetting the password by going /var/log/mysqld.log fetching it copying it parsing it somewhere else.
+  sudo grep temp /var/log/mysqld.log
+  sudo grep 'A temporary password' /var/log/mysqld.log
+  column based filter using awk
+  sudo grep 'A temporary password' /var/log/mysqld.log | awk '{print $11}'
+  or fetching last field
+  sudo grep 'A temporary password' /var/log/mysqld.log | awk '{print $NF}'
+
+ new problem
+==============
+since password is already changed,it is failing on rerun of the script.
+  
+
+
+need to handle error
+
+command is successful or failure is not handled.
+
+if anything fails in btw it was not stopping,it will proceed
+  set -e is the solution. this also have a limition hence we have proceeded our own handling errors.
+
+
+
+enhancements:
+=============
+output(whatever we run it is showing on screen,not needed)
+ this can be done using redirectors
+
+Redirectors:
+-----------
+input(>)  ---- input to the file
+output(<)  --- output to the file
+override/append(>>) --- append
+
+STDOUT(1>)(>) : only output
+
+STDERR(2>): only error
+
+STDOUT & STDERR(&>)
+both output and error will be redirected to the samefile
+
+&>/dev/null : nullifying if any error is coming
+
+
+question
+==========
+how set command is stopping the execution if there was an error?
+sol: may be error keyword or already exist keyword and stop it there itself.
+this set -e will not help all the times.
+
+code standards
+-----------------
+1-rerun should not fail
+2-code shouldnt have any password
+  export MYSQL_PASSWORD=Roboshop@1
+3-keep the code dry
+

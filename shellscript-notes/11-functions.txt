@@ -1,0 +1,101 @@
+functions:
+
+functions are reusable
+
+ex:
+
+#!/bin/bash
+
+#Declare a function
+sample() {
+  echo sample function
+{
+
+#Access a function,simple function name
+sample
+
+variables with function
+====================
+if we declare a variable in the main program then u can access them in function and vice-versa
+ex:
+
+
+#!/bin/bash
+
+#Declare a function
+sample() {
+  echo sample function
+  echo a from main program = $a
+  b=20
+
+{
+
+#Access a function,simple function name
+a=10
+sample
+echo b from function = $b
+
+o/P:echo a from main program = 10
+echo b from main program =20
+
+variables of the main program can be overwritten by function and vice versa
+ex:
+sample() {
+  a=30
+  echo sample function
+  echo a from main program = $a
+  b=20
+
+{
+
+#Access a function,simple function name
+a=10
+sample
+echo b from function = $b
+echo a in main program = $a
+
+o/P:a from main program = 10
+b from main program =20
+a in main program = 30
+
+
+note: overwrite is possible in function
+
+example: exit status
+==========
+statuscheck() {
+    if [ $? -eq 0 ]; then
+      echo -e "\e[32mSuccess\e[0m"
+    else
+      echo -e "\e[31mfailure\e[0m"
+      exit 1
+    fi
+}
+
+echo "Installing nodes"
+yum install nodejs -y &>>/tmp/roboshop.log
+statuscheck
+
+
+id roboshop & &>>/tmp/roboshop.log
+if [ $? -eq 0 ]; then
+  echo "adding application user"
+  useradd roboshop
+  if [ $? -eq 0 ]; then
+    echo -e "\e[32mSuccess\e[0m"
+  else
+    echo -e "\e[31mfailure\e[0m"
+    statuscheck
+  fi
+fi
+
+example
+===========
+    id roboshop & &>>/tmp/roboshop.log
+    if [ $? -eq 0 ]; then
+      echo "adding application user"
+      useradd roboshop
+      statuscheck
+    fi
+
+

@@ -1,0 +1,3 @@
+convert upper to lower
+
+echo ABC | tr [:upper:] [:lower:]

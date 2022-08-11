@@ -1,0 +1,19 @@
+$?
+echo $?
+this command helps to know whether executed command is success or failure
+
+exit status range 0-255
+0- universal success
+1-255-is not successful/partial successful
+
+if there is a failure it should not continue,should stope then and there.
+
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
+if [ $? -eq 0 ]; then
+  echo -e "\e[32mSuccess\e[0m"
+else
+  echo -e "\e[31mfailure\e[0m"
+  exit 1
+fi
+
+

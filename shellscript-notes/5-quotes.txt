@@ -1,0 +1,33 @@
+echo hello
+o/p: hello
+
+echo **
+o/p: different
+
+echo '**'
+echo "**"
+bcoz ** are special characters in linux
+
+single quotes: doesnt consider any character as a spl character.everything treats as normal character.
+=============
+a=10
+echo $a
+o/p:10
+
+echo '$a'
+o/p:$a : bcoz it doesnt have special characters
+note: it didnt consider special character of variable
+
+
+Double quotes:very few characters like $ will be considered as special character and remaining of them are normal character.
+=============
+
+echo "$a"
+
+o/p:  10
+it did consider special character($ as special character) of variable
+
+note: that is wht we use "double quotes"
+
+
+

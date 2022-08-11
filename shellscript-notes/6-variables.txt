@@ -1,0 +1,149 @@
+if you assign a name to set of data is called a variable
+
+ex: my name is raghu is a variable
+this is devops training is a variable
+this is devops batch 66 is a variable
+car registration number is variable
+
+Declare a variable
+--------------------
+Variablename=DATA
+
+a=10
+
+access the variable
+===================
+$VAR or ${VAR}
+
+echo $a
+or
+echo ${a}
+
+significance of {}
+====================
+echo $aapples
+shell is confused and doesnt print variable value
+
+echo ${a}apples
+
+#!/bin/bash
+a=10
+echo value pf a = $a
+
+#hard coded date value
+date=2022-08-05
+echo today date is $date
+
+#dynamically fetching the data
+command and substitute is need to be done
+#command substitution
+date1=$(date +%F)
+echo today date is $date1
+
+
+git pull; bash 03-vars.sh
+
+arthematic substitution
+=======================
+b=$((2+3-5*6))
+echo of b = $b
+
+
+git pull; bash 03-vars.sh
+
+variable ponders
+==================
+variable names can have only character a-z,A-Z,0-9,(underscore)
+variable should not start with a number and it can start with a underscore
+special characters are not allowed
+variables by default will not have any data types
+everything is a string
+as a user u should know what data should come since there is no data type.
+
+variable properties
+=====================
+1-Readwrite : it is allowing us overwrite it
+a=10
+echo $a
+a=20
+echo $a
+
+2-Readonly: it will not allow u to overwrite,security team does use this as sometime they dont want to override the variable
+a=10
+readonly a
+echo $a
+a=20
+echo $a
+
+3-scalar:
+a=10
+echo $a
+a=20
+echo $a
+
+converting into scalar or vector
+
+4-array: single variable holding multiple data
+() : parenthesis
+{} : curly braces
+
+b=(10,20)
+cho ${b[0]}
+10
+echo ${b[1]}
+20
+
+d=([c]=789 [d]=012)
+search for c key value
+echo ${d[c]}
+789
+
+named array(kind of map)
+========================
+-A : is meant of named array and we can have any character in place of -A
+
+declar -A myassociateArray
+myassociateArray=([apples]=10 [banana]=20)
+echo ${myassociateArray[apples]}
+echo ${myassociateArray[banana]}
+
+
+5-Local
+c=100 : this is created at commmand line level and this process id is different
+
+#!/bin/bash
+#here we dint declare variable
+#this is environmental variable
+echo value of c =$c and this process id is different
+#this is calling in script
+
+6-environment
+============
+a=10
+sh /tmp/1.sh
+export a 
+sh /tmp/1.sh
+
+export c 
+
+#!/bin/bash
+#here we dint declare variable
+#this is environmental variable
+echo value of c =$c and this time it will take from environmental variable as we have set as a environmental variable
+#this is calling in script
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+

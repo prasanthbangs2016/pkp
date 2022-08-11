@@ -1,0 +1,60 @@
+echo command will help us printing message on screen from out scripts
+
+while printing we can enable escape sequence for more options
+
+1-\e -to enable color
+2-\n -to print new line
+3-\t -to enable new tab
+
+sometime we need to print multiline
+
+#this prints in 2 lines
+echo -e "Hello\World"
+
+-e : to print multiline or to enable we use -e option
+
+echo "Hello\nWorld"
+o/p:Hello\nWorld
+
+echo -e Hello\nWorld
+o/p: Hello\nWorld
+quotes are mandatory for escape sequences.
+
+echo -e "Hello\nWorld"
+o/p:
+
+
+Tab line
+========
+echo -e "one\t\ttwo"
+o/p:one  two
+
+to print colors
+================
+echo -e "\e[31Hello\e[0m"
+
+\e[31  : enable color
+\e[0m  : disable color
+
+note: when we enable color we need to disable color otherwise it continues for next line
+
+color		code
+Red		31
+green		32
+yellow		33
+blue		34
+magenta		35
+cyan		36
+
+echo -e "\e[32Hello\e[0m"
+
+echo -e "\e[33Hello\e[0m"
+
+echo -e "\e[34Hello\e[0m"
+
+echo -e "\e[35Hello\e[0m"
+
+echo -e "\e[36Hello\e[0m"
+
+
+

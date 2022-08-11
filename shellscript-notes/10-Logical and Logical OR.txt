@@ -1,0 +1,7 @@
+command1 && command2: combining 2 commands
+examples
+
+systemctl daemon-reload &>>/tmp/roboshop.log && systemctl start cart &>>/tmp/roboshop.log
+
+command1 || command2: command2 is executed only if command1 is failure
+

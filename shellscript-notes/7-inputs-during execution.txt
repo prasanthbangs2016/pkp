@@ -1,0 +1,7 @@
+inputs -during execution
+
+using read command
+
+while executing the script we ask the input from user using "read" command
+this approach will be taken if for sure we know that script will be executed manually
+otherwise this approach will not work for automation,it breaks the automation and ends with failures.
