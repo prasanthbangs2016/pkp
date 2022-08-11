@@ -96,3 +96,20 @@ JAVA() {
   
 
 }
+
+PYTHON() {
+  echo installing python
+  yum install python36 gcc python3-devel -y &>>/tmp/roboshop.log
+  statuscheck
+
+  APP_USER_SETUP
+  DOWNLOAD
+  APP_CLEAN
+  
+  echo install python dependencies
+  cd /home/roboshop/payment 
+  pip3 install -r requirements.txt &>>${LOG}
+  statuscheck
+
+  SYSTEMD
+}
