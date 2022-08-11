@@ -4,6 +4,12 @@ source common.sh
 
 COMPONENT=rabbitmq
 
+
+if [ -z "$RABBITMQ_PASSWORD" ]; then
+  echo -e "\e[33m env variable RABBITMQ_PASSWORD is missing \e[0m"
+  exit 1
+fi
+
 #RabbitMQ is a messaging Queue which is used by some components of the applications.
 
 #Erlang is a dependency which is needed for RabbitMQ
@@ -28,7 +34,7 @@ statuscheck
 
 #Create application user
 echo adding app user rabbitmq
-rabbitmqctl add_user roboshop roboshop123 &>>${LOG}
+rabbitmqctl add_user roboshop ${RABBITMQ_PASSWORD} &>>${LOG}
 rabbitmqctl set_user_tags roboshop administrator &>>${LOG}
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>>${LOG}
 statuscheck
