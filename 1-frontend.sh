@@ -1,9 +1,9 @@
  #!/bin/bash
  #when script get executed shebang will ignored by the interpretor
-
+COMPONENT=frontend
 source common.sh
 
-COMPONENT=frontend
+
 
  echo "Installing nginx"
  yum install nginx -y &>>${LOG}

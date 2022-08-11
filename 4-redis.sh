@@ -1,6 +1,7 @@
+COMPONENT=redis
 source common.sh
 
-COMPONENT=catalogu
+
 
 echo "set up yum repo"
 curl -L https://raw.githubusercontent.com/roboshop-devops-project/redis/main/redis.repo -o /etc/yum.repos.d/redis.repo &>>${LOG}
