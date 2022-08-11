@@ -9,7 +9,7 @@ statuscheck() {
 
 DOWNLOAD() {
     echo "Downloading ${COMPONENT} content"
-    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}archive/main.zip" &>>/tmp/${COMPONENT}.log
+    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/${COMPONENT}-devops-project/${COMPONENT}archive/main.zip" &>>/tmp/${COMPONENT}.log
     statuscheck
 }
 NODEJS() {
@@ -23,16 +23,16 @@ NODEJS() {
     yum install nodejs -y &>>/tmp/${COMPONENT}.log
     statuscheck
 
-    id roboshop & &>>/tmp/${COMPONENT}.log
+    id ${COMPONENT} & &>>/tmp/${COMPONENT}.log
     if [ $? -eq 0 ]; then
       echo "adding application user"
-      useradd roboshop
+      useradd ${COMPONENT}
       statuscheck
     fi
 
     echo "Downloading ${COMPONENT} content"
-    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}archive/main.zip" &>>/tmp/${COMPONENT}.log
-    cd /home/roboshop
+    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/${COMPONENT}-devops-project/${COMPONENT}archive/main.zip" &>>/tmp/${COMPONENT}.log
+    cd /home/${COMPONENT}
     statuscheck
 
     echo "cleaing old application content"
@@ -46,15 +46,15 @@ NODEJS() {
     statuscheck
 
     echo "Downloading ${COMPONENT} app code"
-    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>/tmp/roboshop.log
-    cd /home/roboshop
+    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/${COMPONENT}-devops-project/${COMPONENT}/archive/main.zip" &>>/tmp/${COMPONENT}.log
+    cd /home/${COMPONENT}
     statuscheck
 
     echo " Removing older application code"
     rm -rf ${COMPONENT}
-    unzip -o /tmp/${COMPONENT}.zip &>>/tmp/roboshop.log
+    unzip -o /tmp/${COMPONENT}.zip &>>/tmp/${COMPONENT}.log
     mv ${COMPONENT}-main ${COMPONENT} 
-    cd /home/roboshop/${COMPONENT}
+    cd /home/${COMPONENT}/${COMPONENT}
     statuscheck
 
     echo "Downloading application dependencies"
@@ -62,7 +62,7 @@ NODEJS() {
     statuscheck
 
     echo "configuring the ${COMPONENT} systemd service"
-    mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service
+    mv /home/${COMPONENT}/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service
     systemctl daemon-reload &>>/tmp/${COMPONENT}.log
     systemctl start ${COMPONENT} &>>/tmp/${COMPONENT}.log
     systemctl enable ${COMPONENT} &>>/tmp/${COMPONENT}.log
@@ -77,3 +77,5 @@ if [ $USER_ID -ne 0 ]; then
   exit 1
 fi
 
+LOG=/tmp/${COMPONENT}.log
+rm -rf ${LOG}
