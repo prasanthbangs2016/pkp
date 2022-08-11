@@ -56,3 +56,7 @@ cat /etc/mongod.conf | grep 127
 
 sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
 
+sudo grep 127 /etc/redis.conf
+
+
+
