@@ -4,3 +4,55 @@ delete the lines
 substitue a word
 add the line
 
+1- sed will not change the file and prints the changes on terminal
+   this is the default behaviour of sed
+
+2- if we need to edit the file rather than just printing on screen
+   we have to use -i option
+
+without i option we cant edit the file
+
+-e : is for multiple criteria search 
+
+-i : insert something
+
+-a : append
+
+-c : change
+
+delete the line
+===============
+head /etc/passwd >/tmp/passwd
+
+sed -e '/root/ d' /tmp/passwd
+sed -i -e '/root/ d' /tmp/password
+
+sed -i -e '/root/ d' -e '/nologin/ d' /tmp/passwd
+sed -i -e '1 d' /tmp/passwd
+
+substitute
+===========
+sed -e 's/root/ROOT/' /tmp/passwd
+
+sed -i -e 's/root/ROOT/' /tmp/passwd
+
+sed -i -e 's/root/ROOT/gi' /tmp/passwd
+
+add line
+========
+1: is first line
+
+sed -e '1 i Hello' /tmp/passwd
+
+sed -i -e '1 i Hello' /tmp/passwd
+
+sed -i -e '1 a Hello' /tmp/passwd
+
+sed -i -e '1 c Hello' /tmp/passwd
+
+sed -i -e 'shutdown/ c Hello' /tmp/password
+
+cat /etc/mongod.conf | grep 127
+
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
+
