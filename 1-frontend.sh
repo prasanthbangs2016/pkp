@@ -6,7 +6,7 @@ source common.sh
 COMPONENT=frontend
 
  echo "Installing nginx"
- yum install nginx -y &>>/tmp/${Log}
+ yum install nginx -y
  statuscheck
  
 
