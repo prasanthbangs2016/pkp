@@ -2,4 +2,13 @@
 
 sed -i -e 's/MONGO_DNSNAME/mongodb-dev.roboshop.internal/' /etc/systemd/system/${COMPONENT}.service &>>${LOG}
 
-sduo cat /var/log/nginx/access.log
+sudo cat /var/log/nginx/access.log
+
+
+
+sudo vi /etc/systemd/system/catalogue.service
+sudo systemctl reload catalogue
+sudo systemctl restart catalogue
+sudo systemctl daemon-reload
+sudo systemctl restart catalogue
+sudo cat /var/log/messages
