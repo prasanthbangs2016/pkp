@@ -33,12 +33,19 @@ APP_CLEAN() {
 }
 
 SYSTEMD() {
+
+  echo update systemd config
+  sed -i -e 's/MONGO_DNSNAME/mongodb-dev.roboshop.internal/' /etc/systemd/system/${COMPONENT}.service &>>${LOG}
+  statuscheck
+
   echo configuring ${COMPONENT} systemD service
   mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/shipping.service
   systemctl daemon-reload &>>/tmp/roboshop.log
   systemctl start shipping &>>/tmp/roboshop.log
   systemctl enable shipping &>>/tmp/roboshop.log
   statuscheck
+
+
 }
 
 
