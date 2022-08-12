@@ -16,18 +16,15 @@ fi
 #Erlang is a dependency which is needed for RabbitMQ
 
 echo installing erlang from repo
-curl -s https://packagecloud.io/install/repositories/${COMPONENT}/rabbitmq-server/script.rpm.sh | sudo bash &>>${LOG}
+curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash &>>${LOG}
 statuscheck
 
-echo install rabbite mq from repo
+echo install rabbit mq from repo
 yum install https://github.com/rabbitmq/erlang-rpm/releases/download/v23.2.6/erlang-23.2.6-1.el7.x86_64.rpm rabbitmq-server -y &>>${LOG}
 statuscheck
 
 
 
-echo installing rabbitmq server
-yum install rabbitmq-server -y &>>${LOG}
-statuscheck
 
 echo start rabbitmq service
 systemctl enable rabbitmq-server &>>${LOG}

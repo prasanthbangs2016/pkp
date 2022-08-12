@@ -22,9 +22,10 @@ statuscheck
 echo "unarchive the frontend code"
 unzip -o /tmp/frontend.zip &>>${LOG}
 mv frontend-main/static/* .
-mv frontend-main/localhost.conf /etc/nginx/default.d/${COMPONENT}.conf
+mv frontend-main/localhost.conf /etc/nginx/default.d/roboshop.conf
 statuscheck
 
 echo "start nginx service"
-systemctl enable nginx &>>${LOG}
 systemctl restart nginx &>>${LOG}
+systemctl enable nginx &>>${LOG}
+statuscheck

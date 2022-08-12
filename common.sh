@@ -8,8 +8,8 @@ statuscheck() {
 }
 
 DOWNLOAD() {
-    echo "Downloading ${COMPONENT} content"
-    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>/tmp/${COMPONENT}.log
+    echo "Downloading ${COMPONENT} Application content"
+    curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>${LOG}
     statuscheck
 }
 
@@ -33,6 +33,9 @@ APP_CLEAN() {
 }
 
 SYSTEMD() {
+  echo Update SystemD Config
+  sed -i -e 's/MONGO_DNSNAME/mongodb-dev.roboshop.internal/' -e 's/MONGO_ENDPOINT/mongodb-dev.roboshop.internal/' -e 's/REDIS_ENDPOINT/redis-dev.roboshop.internal/' -e 's/CATALOGUE_ENDPOINT/catalogue-dev.roboshop.internal/' -e 's/AMQPHOST/rabbitmq-dev.roboshop.internal/' -e 's/CARTHOST/cart-dev.roboshop.internal/' -e 's/USERHOST/user-dev.roboshop.internal/' -e 's/CARTENDPOINT/cart-dev.roboshop.internal/' -e 's/DBHOST/mysql-dev.roboshop.internal/' /home/roboshop/${COMPONENT}/systemd.service &>>${LOG}
+  StatusCheck
 
   echo configuring ${COMPONENT} systemD service
   mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service &>>${LOG}
@@ -52,13 +55,13 @@ SYSTEMD() {
 
 NODEJS() {
     
-    echo "downloading nodejs repos"
+    echo "Setting nodejs repos"
     curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/${COMPONENT}.log
     statuscheck
 
 
     echo "Installing nodes"
-    yum install nodejs -y &>>/tmp/${COMPONENT}.log
+    yum install nodejs -y &>>${LOG}
     statuscheck
 
     APP_USER_SETUP
@@ -66,27 +69,13 @@ NODEJS() {
     APP_CLEAN
 
     echo "Downloading application dependencies"
-    npm install &>>/tmp/${COMPONENT}.log
-    statuscheck
+    npm install &>>${LOG}
+    
 
-    echo "configuring the ${COMPONENT} systemd service"
-    mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service
-    systemctl daemon-reload &>>/tmp/${COMPONENT}.log
-    systemctl start ${COMPONENT} &>>/tmp/${COMPONENT}.log
-    systemctl enable ${COMPONENT} &>>/tmp/${COMPONENT}.log
-    statuscheck
+
  
-
+    SYSTEMD
 }
-#getting current running user id
-USER_ID=$(id -u)
-if [ $USER_ID -ne 0 ]; then
-  echo -e "\e[32m You should run this script as root user or sudo\e[0"
-  exit 1
-fi
-
-LOG=/tmp/${COMPONENT}.log
-rm -rf ${LOG}
 
 JAVA() {
   echo install maven
@@ -97,7 +86,7 @@ JAVA() {
   APP_CLEAN
   echo shipping clean package with maven
   mvn clean package &>>${LOG}
-  mv target/shipping-1.0.jar shipping.jar
+  mv target/shipping-1.0.jar shipping.jar &>>${LOG}
   statuscheck
   SYSTEMD
   
@@ -106,7 +95,7 @@ JAVA() {
 
 PYTHON() {
   echo installing python
-  yum install python36 gcc python3-devel -y &>>/tmp/roboshop.log
+  yum install python36 gcc python3-devel -y &>>${LOG}
   statuscheck
 
   APP_USER_SETUP
@@ -120,3 +109,12 @@ PYTHON() {
 
   SYSTEMD
 }
+#getting current running user id
+USER_ID=$(id -u)
+if [ $USER_ID -ne 0 ]; then
+  echo -e "\e[32m You should run this script as root user or sudo\e[0"
+  exit 1
+fi
+
+LOG=/tmp/${COMPONENT}.log
+rm -rf ${LOG}

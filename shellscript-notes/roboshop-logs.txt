@@ -1,0 +1,5 @@
+/etc/systemd/system/catalogue.service
+
+sed -i -e 's/MONGO_DNSNAME/mongodb-dev.roboshop.internal/' /etc/systemd/system/${COMPONENT}.service &>>${LOG}
+
+sduo cat /var/log/nginx/access.log

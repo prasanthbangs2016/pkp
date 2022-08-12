@@ -58,5 +58,15 @@ sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
 
 sudo grep 127 /etc/redis.conf
 
+search localhost and replace with catalogue
+sed -e 's/localhost/catalogue-dev.roboshop.internal/' /etc/nginx/default.d/roboshop.conf
+
+search for word catalogue,anywhere u find the catalogue and u substitute with 
+sed -e '/catalogue/ s/localhost/catalogue-dev.roboshop.internal/' /etc/nginx/default.d/roboshop.conf
+
+
+
+
+
 
 
