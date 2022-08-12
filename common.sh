@@ -40,9 +40,9 @@ SYSTEMD() {
 
   echo configuring ${COMPONENT} systemD service
   mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/shipping.service
-  systemctl daemon-reload &>>/tmp/roboshop.log
-  systemctl start shipping &>>/tmp/roboshop.log
-  systemctl enable shipping &>>/tmp/roboshop.log
+  systemctl daemon-reload &>>${LOG}
+  systemctl restart ${COMPONENT} &>>${LOG}
+  systemctl enable ${COMPONENT} &>>${LOG}
   statuscheck
 
 
